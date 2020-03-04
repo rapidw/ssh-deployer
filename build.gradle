@@ -1,0 +1,25 @@
+plugins {
+    id 'java-library'
+    id "io.freefair.lombok" version "5.0.0-rc4"
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.sshd:sshd-common:2.4.0'
+    implementation 'org.apache.sshd:sshd-core:2.4.0'
+    implementation 'org.apache.sshd:sshd-scp:2.4.0'
+    implementation 'org.apache.sshd:sshd-netty:2.4.0'
+    implementation "commons-io:commons-io:2.6"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+}
+
+test {
+    useJUnitPlatform()
+}
