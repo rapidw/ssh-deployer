@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,9 +50,5 @@ public class SshDeployer {
 
         log.debug("\n{}", out.toString());
         client.stop();
-    }
-
-    private void uploadFile(ClientSession session, Path sourcePath, String targetPath) {
-
     }
 }
