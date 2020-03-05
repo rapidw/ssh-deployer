@@ -21,7 +21,6 @@ public class ScpByteArrayUploadTask extends SshTask {
 
     @Builder
     public ScpByteArrayUploadTask(byte[] data, String remotePath, @Singular Collection<PosixFilePermission> permissions) {
-        super(SshTaskType.SCP_BYTE_ARRAY_UPLOAD);
         this.data = data;
         this.remotePath = remotePath;
         this.timestamp = Instant.now();

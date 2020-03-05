@@ -14,7 +14,6 @@ public class ScpLocalFileUploadTask extends SshTask {
     private String remotePath;
 
     public ScpLocalFileUploadTask(String localPath, String remotePath) {
-        super(SshTaskType.SCP_LOCAL_FILE_UPLOAD);
         this.localPath = localPath;
         this.remotePath = remotePath;
     }
