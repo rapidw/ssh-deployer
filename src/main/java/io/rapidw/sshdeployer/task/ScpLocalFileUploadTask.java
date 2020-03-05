@@ -1,5 +1,8 @@
-package io.rapidw.sshdeployer;
+package io.rapidw.sshdeployer.task;
 
+import io.rapidw.sshdeployer.SshDeployerException;
+import io.rapidw.sshdeployer.SshDeployerOptions;
+import io.rapidw.sshdeployer.SshTask;
 import lombok.Getter;
 import org.apache.sshd.client.scp.ScpClient;
 import org.apache.sshd.client.scp.ScpClientCreator;
@@ -8,7 +11,7 @@ import org.apache.sshd.client.session.ClientSession;
 import java.io.ByteArrayOutputStream;
 
 @Getter
-public class ScpLocalFileUploadTask extends SshTask {
+public class ScpLocalFileUploadTask implements SshTask {
 
     private String localPath;
     private String remotePath;
@@ -19,7 +22,7 @@ public class ScpLocalFileUploadTask extends SshTask {
     }
 
     @Override
-    void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err) {
+    public void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err) {
         ScpClientCreator creator = ScpClientCreator.instance();
         ScpClient client = creator.createScpClient(session);
         try {

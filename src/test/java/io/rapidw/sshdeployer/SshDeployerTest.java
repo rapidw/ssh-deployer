@@ -1,5 +1,7 @@
 package io.rapidw.sshdeployer;
 
+import io.rapidw.sshdeployer.task.CommandTask;
+import io.rapidw.sshdeployer.task.ScpByteArrayUploadTask;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 

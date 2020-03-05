@@ -1,5 +1,8 @@
-package io.rapidw.sshdeployer;
+package io.rapidw.sshdeployer.task;
 
+import io.rapidw.sshdeployer.SshDeployerException;
+import io.rapidw.sshdeployer.SshDeployerOptions;
+import io.rapidw.sshdeployer.SshTask;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.channel.ClientChannel;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -10,16 +13,15 @@ import java.util.Collections;
 import java.util.Objects;
 
 @Slf4j
-public class CommandTask extends SshTask{
+public class CommandTask implements SshTask {
     private String command;
 
     public CommandTask(String command) {
-        super(SshTaskType.COMMAND);
         this.command = Objects.requireNonNull(command);
     }
 
     @Override
-    void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err) {
+    public void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err) {
         log.debug("do command: {}", command);
         try (ClientChannel channel = session.createExecChannel(command)) {
 

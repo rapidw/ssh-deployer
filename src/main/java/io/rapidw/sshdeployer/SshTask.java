@@ -4,7 +4,7 @@ import org.apache.sshd.client.session.ClientSession;
 
 import java.io.ByteArrayOutputStream;
 
-abstract class SshTask {
+public interface SshTask {
 
-    abstract void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err);
+    void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err);
 }
