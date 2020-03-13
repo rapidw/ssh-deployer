@@ -3,33 +3,36 @@ package io.rapidw.sshdeployer.task;
 import io.rapidw.sshdeployer.SshDeployerException;
 import io.rapidw.sshdeployer.SshDeployerOptions;
 import io.rapidw.sshdeployer.SshTask;
-import lombok.Builder;
 import lombok.Singular;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.scp.ScpClient;
 import org.apache.sshd.client.scp.ScpClientCreator;
 import org.apache.sshd.client.session.ClientSession;
 import org.apache.sshd.common.scp.ScpTimestamp;
+import org.slf4j.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.file.attribute.PosixFilePermission;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
 
-@Slf4j
 public class ScpByteArrayUploadTask implements SshTask {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ScpByteArrayUploadTask.class);
     private byte[] data;
     private Instant timestamp;
     private String remotePath;
     private Collection<PosixFilePermission> permissions;
 
-    @Builder
     public ScpByteArrayUploadTask(byte[] data, String remotePath, @Singular Collection<PosixFilePermission> permissions) {
         this.data = data;
         this.remotePath = remotePath;
         this.timestamp = Instant.now();
         this.permissions = permissions;
+    }
+
+    public static ScpByteArrayUploadTaskBuilder builder() {
+        return new ScpByteArrayUploadTaskBuilder();
     }
 
     @Override
@@ -42,6 +45,63 @@ public class ScpByteArrayUploadTask implements SshTask {
             client.upload(data, remotePath, permissions, new ScpTimestamp(milli, milli));
         } catch (Exception e) {
             throw new SshDeployerException(e);
+        }
+    }
+
+    public static class ScpByteArrayUploadTaskBuilder {
+        private byte[] data;
+        private String remotePath;
+        private ArrayList<PosixFilePermission> permissions;
+
+        ScpByteArrayUploadTaskBuilder() {
+        }
+
+        public ScpByteArrayUploadTask.ScpByteArrayUploadTaskBuilder data(byte[] data) {
+            this.data = data;
+            return this;
+        }
+
+        public ScpByteArrayUploadTask.ScpByteArrayUploadTaskBuilder remotePath(String remotePath) {
+            this.remotePath = remotePath;
+            return this;
+        }
+
+        public ScpByteArrayUploadTask.ScpByteArrayUploadTaskBuilder permission(PosixFilePermission permission) {
+            if (this.permissions == null) this.permissions = new ArrayList<PosixFilePermission>();
+            this.permissions.add(permission);
+            return this;
+        }
+
+        public ScpByteArrayUploadTask.ScpByteArrayUploadTaskBuilder permissions(Collection<? extends PosixFilePermission> permissions) {
+            if (this.permissions == null) this.permissions = new ArrayList<PosixFilePermission>();
+            this.permissions.addAll(permissions);
+            return this;
+        }
+
+        public ScpByteArrayUploadTask.ScpByteArrayUploadTaskBuilder clearPermissions() {
+            if (this.permissions != null)
+                this.permissions.clear();
+            return this;
+        }
+
+        public ScpByteArrayUploadTask build() {
+            Collection<PosixFilePermission> permissions;
+            switch (this.permissions == null ? 0 : this.permissions.size()) {
+                case 0:
+                    permissions = java.util.Collections.emptyList();
+                    break;
+                case 1:
+                    permissions = java.util.Collections.singletonList(this.permissions.get(0));
+                    break;
+                default:
+                    permissions = java.util.Collections.unmodifiableList(new ArrayList<PosixFilePermission>(this.permissions));
+            }
+
+            return new ScpByteArrayUploadTask(data, remotePath, permissions);
+        }
+
+        public String toString() {
+            return "ScpByteArrayUploadTask.ScpByteArrayUploadTaskBuilder(data=" + java.util.Arrays.toString(this.data) + ", remotePath=" + this.remotePath + ", permissions=" + this.permissions + ")";
         }
     }
 }

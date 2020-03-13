@@ -3,7 +3,6 @@ package io.rapidw.sshdeployer.task;
 import io.rapidw.sshdeployer.SshDeployerException;
 import io.rapidw.sshdeployer.SshDeployerOptions;
 import io.rapidw.sshdeployer.SshTask;
-import lombok.Getter;
 import org.apache.sshd.client.scp.ScpClient;
 import org.apache.sshd.client.scp.ScpClientCreator;
 import org.apache.sshd.client.session.ClientSession;
@@ -13,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-@Getter
 public class ScpClasspathFileUploadTask implements SshTask {
 
     private String localPath;
@@ -39,5 +37,13 @@ public class ScpClasspathFileUploadTask implements SshTask {
         } catch (Exception e) {
             throw new SshDeployerException(e);
         }
+    }
+
+    public String getLocalPath() {
+        return this.localPath;
+    }
+
+    public String getRemotePath() {
+        return this.remotePath;
     }
 }
