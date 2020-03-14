@@ -201,3 +201,4 @@ artifactory {
 }
 
 afterReleaseBuild.dependsOn bintrayUpload
+compileJava.dependsOn licenseFormat

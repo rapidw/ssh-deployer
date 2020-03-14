@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rapidw.sshdeployer;
+package io.rapidw.utils.sshdeployer;
 
-import io.rapidw.sshdeployer.task.CommandTask;
-import io.rapidw.sshdeployer.task.ScpByteArrayUploadTask;
+import io.rapidw.utils.sshdeployer.task.CommandTask;
+import io.rapidw.utils.sshdeployer.task.ScpByteArrayUploadTask;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 

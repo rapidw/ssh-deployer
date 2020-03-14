@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rapidw.sshdeployer;
+package io.rapidw.utils.sshdeployer;
 
 import org.apache.sshd.client.session.ClientSession;
 
@@ -21,5 +21,5 @@ import java.io.ByteArrayOutputStream;
 
 public interface SshTask {
 
-    void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err);
+    void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err) throws Exception;
 }

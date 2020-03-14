@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rapidw.sshdeployer.task;
+package io.rapidw.utils.sshdeployer.task;
 
-import io.rapidw.sshdeployer.SshDeployerException;
-import io.rapidw.sshdeployer.SshDeployerOptions;
-import io.rapidw.sshdeployer.SshTask;
+import io.rapidw.utils.sshdeployer.SshDeployerException;
+import io.rapidw.utils.sshdeployer.SshDeployerOptions;
+import io.rapidw.utils.sshdeployer.SshTask;
 import org.apache.sshd.client.scp.ScpClient;
 import org.apache.sshd.client.scp.ScpClientCreator;
 import org.apache.sshd.client.session.ClientSession;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ScpLocalFileUploadTask implements SshTask {
 
-    private String localPath;
+    private Path localPath;
     private String remotePath;
 
-    public ScpLocalFileUploadTask(String localPath, String remotePath) {
-        this.localPath = localPath;
+    public ScpLocalFileUploadTask(String localPathString, String remotePath) {
+        this.localPath = Paths.get(localPathString);
         this.remotePath = remotePath;
     }
 
@@ -43,13 +45,5 @@ public class ScpLocalFileUploadTask implements SshTask {
         } catch (Exception e) {
             throw new SshDeployerException(e);
         }
-    }
-
-    public String getLocalPath() {
-        return this.localPath;
-    }
-
-    public String getRemotePath() {
-        return this.remotePath;
     }
 }

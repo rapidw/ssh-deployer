@@ -13,36 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rapidw.sshdeployer.task;
+package io.rapidw.utils.sshdeployer.task;
 
-import io.rapidw.sshdeployer.SshDeployerException;
-import io.rapidw.sshdeployer.SshDeployerOptions;
-import io.rapidw.sshdeployer.SshTask;
+import io.rapidw.utils.sshdeployer.SshDeployerException;
+import io.rapidw.utils.sshdeployer.SshDeployerOptions;
+import io.rapidw.utils.sshdeployer.SshTask;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.scp.ScpClient;
 import org.apache.sshd.client.scp.ScpClientCreator;
 import org.apache.sshd.client.session.ClientSession;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
+import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 
+@Slf4j
 public class ScpClasspathFileUploadTask implements SshTask {
 
-    private String localPath;
+    private URL localPath;
     private String remotePath;
 
-    public ScpClasspathFileUploadTask(String localPath, String remotePath) {
-        this.localPath = localPath;
+    public ScpClasspathFileUploadTask(String localPathString, String remotePath) {
+        log.debug(localPathString);
+        this.localPath = this.getClass().getResource(localPathString);
+        if (this.localPath == null) {
+            throw new FileSystemNotFoundException("file not found: " + localPathString);
+        }
         this.remotePath = remotePath;
     }
 
     @Override
-    public void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err) {
+    public void execute(ClientSession session, SshDeployerOptions options, ByteArrayOutputStream out, ByteArrayOutputStream err) throws Exception {
+
+
         try {
-            URL url = this.getClass().getClassLoader().getResource(localPath);
-            Path local = Paths.get(Objects.requireNonNull(this.getClass().getResource(localPath)).toURI());
+            Path local = Paths.get(localPath.toURI());
             ScpClientCreator creator = ScpClientCreator.instance();
             ScpClient client = creator.createScpClient(session);
 
@@ -50,13 +57,5 @@ public class ScpClasspathFileUploadTask implements SshTask {
         } catch (Exception e) {
             throw new SshDeployerException(e);
         }
-    }
-
-    public String getLocalPath() {
-        return this.localPath;
-    }
-
-    public String getRemotePath() {
-        return this.remotePath;
     }
 }

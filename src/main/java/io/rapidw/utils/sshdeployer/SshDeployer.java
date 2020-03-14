@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rapidw.sshdeployer;
+package io.rapidw.utils.sshdeployer;
 
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.keyverifier.AcceptAllServerKeyVerifier;
@@ -63,7 +63,7 @@ public class SshDeployer {
             throw new SshDeployerException(e);
         }
 
-        log.debug("\n{}", out.toString());
+//        log.debug("\n{}", out.toString());
         client.stop();
     }
 }

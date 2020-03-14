@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rapidw.sshdeployer.task;
+package io.rapidw.utils.sshdeployer.task;
 
-import io.rapidw.sshdeployer.SshDeployerException;
-import io.rapidw.sshdeployer.SshDeployerOptions;
-import io.rapidw.sshdeployer.SshTask;
+import io.rapidw.utils.sshdeployer.SshDeployerException;
+import io.rapidw.utils.sshdeployer.SshDeployerOptions;
+import io.rapidw.utils.sshdeployer.SshTask;
 import org.apache.sshd.client.channel.ClientChannel;
 import org.apache.sshd.client.channel.ClientChannelEvent;
 import org.apache.sshd.client.session.ClientSession;

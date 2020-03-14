@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.rapidw.sshdeployer;
+package io.rapidw.utils.sshdeployer;
 
 public class SshDeployerException extends RuntimeException {
 
