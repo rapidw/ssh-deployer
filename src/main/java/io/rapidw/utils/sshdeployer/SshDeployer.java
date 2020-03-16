@@ -18,6 +18,7 @@ package io.rapidw.utils.sshdeployer;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.keyverifier.AcceptAllServerKeyVerifier;
 import org.apache.sshd.client.session.ClientSession;
+import org.apache.sshd.common.SshException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +59,12 @@ public class SshDeployer {
 
             for (SshTask task : tasks) {
                 task.execute(session, options, out, err);
+            }
+        } catch (SshException e) {
+            if (e.getMessage().equals("No more authentication methods available")) {
+                throw new SshDeployerException("invalid username or password", e);
+            } else {
+                throw new SshDeployerException(e);
             }
         } catch (Exception e) {
             throw new SshDeployerException(e);

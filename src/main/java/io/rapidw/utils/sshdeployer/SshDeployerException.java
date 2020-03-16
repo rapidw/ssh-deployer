@@ -24,4 +24,7 @@ public class SshDeployerException extends RuntimeException {
     public SshDeployerException(String msg) {
         super(msg);
     }
+    public SshDeployerException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 }
