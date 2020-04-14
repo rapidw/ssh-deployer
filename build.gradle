@@ -4,7 +4,6 @@ plugins {
     id 'java-library'
     id "signing"
     id "maven-publish"
-    id "io.freefair.lombok" version "5.0.0-rc4"
     id "net.researchgate.release" version "2.8.1"
     id "com.jfrog.bintray" version "1.8.4"
     id "com.github.hierynomus.license" version "0.15.0"

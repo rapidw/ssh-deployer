@@ -18,10 +18,10 @@ package io.rapidw.utils.sshdeployer.task;
 import io.rapidw.utils.sshdeployer.SshDeployerException;
 import io.rapidw.utils.sshdeployer.SshDeployerOptions;
 import io.rapidw.utils.sshdeployer.SshTask;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.scp.ScpClient;
 import org.apache.sshd.client.scp.ScpClientCreator;
 import org.apache.sshd.client.session.ClientSession;
+import org.slf4j.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
@@ -29,8 +29,8 @@ import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Slf4j
 public class ScpClasspathFileUploadTask implements SshTask {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ScpClasspathFileUploadTask.class);
 
     private URL localPath;
     private String remotePath;

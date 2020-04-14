@@ -18,7 +18,6 @@ package io.rapidw.utils.sshdeployer.task;
 import io.rapidw.utils.sshdeployer.SshDeployerException;
 import io.rapidw.utils.sshdeployer.SshDeployerOptions;
 import io.rapidw.utils.sshdeployer.SshTask;
-import lombok.Singular;
 import org.apache.sshd.client.scp.ScpClient;
 import org.apache.sshd.client.scp.ScpClientCreator;
 import org.apache.sshd.client.session.ClientSession;
@@ -39,7 +38,7 @@ public class ScpByteArrayUploadTask implements SshTask {
     private String remotePath;
     private Collection<PosixFilePermission> permissions;
 
-    public ScpByteArrayUploadTask(byte[] data, String remotePath, @Singular Collection<PosixFilePermission> permissions) {
+    public ScpByteArrayUploadTask(byte[] data, String remotePath, Collection<PosixFilePermission> permissions) {
         this.data = data;
         this.remotePath = remotePath;
         this.timestamp = Instant.now();
