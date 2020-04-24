@@ -70,7 +70,14 @@ public class SshDeployer {
             throw new SshDeployerException(e);
         }
 
-//        log.debug("\n{}", out.toString());
         client.stop();
+    }
+
+    public ByteArrayOutputStream getOutputStream() {
+        return out;
+    }
+
+    public ByteArrayOutputStream getErrorStream() {
+        return err;
     }
 }
